@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGmU10KZZYOJYupE6fVS54qqWL3SMRcQPE451P4qLF4CvEUPQm2pfzmh5Cfm6jhGKWtDE7cnLQnmnprKpAx9qWNYHwT07dVL4qhJbnW5GF_HwbZw7umdVgNxuVX5b0NAr6gguOpgWgDC4vSAH1GuM-MG6-W6PtcAjiRjRnMgmJnT_kNYajC33sIknLad8/s320/sb-1.jpg" alt="Description of the image" width="500" height="300">
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    <style>
+        body {
+            background-color: black;
+            color: neon;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .header {
+            color: #39ff14; /* Neon green */
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            background-color: black;
+            color: #39ff14; /* Neon green */
+            border: 1px solid #39ff14; /* Neon green */
+        }
+        button {
+            background-color: #39ff14; /* Neon green */
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            color: #39ff14; /* Neon green */
+        }
+        table, th, td {
+            border: 1px solid #39ff14; /* Neon green */
+        }
+        th, td {
+            padding: 10px;
+        }
+        .neon-red-text {
+            color: white; /* Neon red */
+            text-decoration: underline;
+        }
+        .captcha-text {
+            color: white; /* Changed to white */
+            user-select: none; /* Prevent text selection */
+        }
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #39ff14; /* Neon green */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 50px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">DIPLOMA SUPPLYMENTRY RESULTS JUNE 2024</div>
+    <div class="container">
+        <div>Please enter your PIN no:</div>
+        <input type="text" id="pinNo" placeholder="Enter your PIN no">
+        <div>Please enter your exam month/year:</div>
+        <input type="text" id="examMonth" value="June/2024" disabled>
+        <div>Please enter the captcha:</div>
+        <input type="text" id="captchaInput" placeholder="Enter captcha">
+        <div class="captcha-text" id="captchaDisplay"></div>
+        <button onclick="validateAndShowResult()">Get Info</button>
+    </div>
+    <div id="loader" class="loader" style="display: none;"></div>
+    <div id="resultContainer" style="display: none;">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>PIN No</th>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Credits</th>
+                <th>Result</th>
+                <th>Total credits</th>
+            </tr>
+            <tr>
+                <td>SYED YASEER ALI RAYAN</td>
+                <td id="resultPinNo"></td>
+                <td>HEAT POWER ENGINEERING</td>
+                <td class="neon-red-text">W</td>
+                <td>W</td>
+                <td>W</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        const validCaptcha = ['SKssJ', 'JSJkas', 'SBths', 'IPcsj'];
+        const pinNoPattern = /^21061-ME-013$/;
+
+        function getRandomCaptcha() {
+            return validCaptcha[Math.floor(Math.random() * validCaptcha.length)];
+        }
+
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                showResult();
+            }, 5000);
+        }
+
+        function showResult() {
+            const pinNo = document.getElementById('pinNo').value;
+            document.getElementById('resultPinNo').innerText = pinNo;
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+
+        function validateAndShowResult() {
+            const pinNo = document.getElementById('pinNo').value;
+            const captchaInput = document.getElementById('captchaInput').value;
+            const captchaDisplay = document.getElementById('captchaDisplay').innerText;
+
+            if (pinNoPattern.test(pinNo) && captchaInput === captchaDisplay) {
+                showLoader();
+            } else {
+                alert('Invalid PIN no or captcha');
+                document.getElementById('resultContainer').style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('captchaDisplay').innerText = getRandomCaptcha();
+        });
+    </script>
+
+</body>
+</html>
